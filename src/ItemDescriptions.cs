@@ -22,7 +22,7 @@ internal static class ItemDescriptions
         ["interactable_food_wine"] = "Food that heals, then knocks you out for a moment. Big and sturdy players shrug it off.",
         ["interactable_food_squeakers"] = "Food that heals and changes your voice for a while.",
         ["interactable_food_deepdishpizza"] = "Food that heals and changes your voice for a while.",
-        ["interactable_food_buff_base"] = "A Silly Bean. Eat it to heal and get a random-looking effect for a while.",
+        ["interactable_food_buff_base"] = "A Silly Bean. Eat it to heal and get a special effect for a while.",
 
         ["interactable_gun"] = "Shoots projectiles. Hold Use to fire.",
         ["interactable_gun_flare_sticky"] = "Shoots sticky flares that cling to walls and light up the cave.",
