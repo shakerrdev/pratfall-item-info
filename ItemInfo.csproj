@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>ItemInfo</AssemblyName>
+    <RootNamespace>ItemInfo</RootNamespace>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DebugType>none</DebugType>
+    <GameDir Condition="'$(GameDir)' == ''">D:\SteamLibrary\steamapps\common\Pratfall</GameDir>
+    <GameData>$(GameDir)\data_Pratfall_windows_x86_64</GameData>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Pratfall" HintPath="$(GameData)\Pratfall.dll" Private="false" />
+    <Reference Include="GodotSharp" HintPath="$(GameData)\GodotSharp.dll" Private="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="manifest.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="config.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
