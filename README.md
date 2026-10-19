@@ -35,7 +35,7 @@ You need the .NET 8 SDK. The project references `Pratfall.dll` and `GodotSharp.d
 dotnet build -c Release -p:GameDir="D:\SteamLibrary\steamapps\common\Pratfall"
 ```
 
-Copy `ItemInfo.dll`, `manifest.json` and `config.json` from `bin\Release` into `mods\ItemInfo`.
+Copy `ItemInfo.dll`, `manifest.json`, `config.json` and `preview.jpg` from `bin\Release` into `mods\ItemInfo`. The game's `SteamWorkshopUploader.exe` uses `preview.jpg` as the Workshop thumbnail.
 
 ## How it works
 

@@ -19,5 +19,6 @@
   <ItemGroup>
     <None Include="manifest.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="config.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="preview.jpg" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
