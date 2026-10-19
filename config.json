@@ -1,0 +1,11 @@
+{
+  "ToggleKey": "F4",
+  "ShowHeldItem": true,
+  "ShowLookAtItem": true,
+  "RevealSillyBeans": true,
+  "PanelPosition": "bottom-right",
+  "PanelOffsetX": 24,
+  "PanelOffsetY": 160,
+  "PanelWidth": 360,
+  "FontScale": 1.0
+}
