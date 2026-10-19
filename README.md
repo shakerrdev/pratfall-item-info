@@ -2,8 +2,8 @@
 
 Shows what an item does and how much of it is left.
 
-- **Held item:** a panel at the bottom right shows the item's name, a short description and live stats: shots, rockets or ziplines left, battery or flare time left, how much it heals, fuse and blast radius, the material it makes, and so on.
-- **Looked-at item:** an item lying in the world shows its stats under its name, in the game's own interaction label.
+- **Held item:** a panel at the bottom left shows the item's name, a short description and live stats: shots, rockets or ziplines left, battery or flare time left, how much it heals, fuse and blast radius, the material it makes, and so on.
+- **Looked-at item:** an item lying in the world shows its stats just above its name, in the game's own interaction label.
 - **Silly Beans:** the panel shows which effect a bean gives and for how long. You can turn this off in the config.
 - **F4** shows or hides everything.
 
@@ -20,11 +20,11 @@ Edit `mods\ItemInfo\config.json` and restart the game:
 | --- | --- | --- |
 | `ToggleKey` | `"F4"` | Key that shows or hides the info (any Godot key name) |
 | `ShowHeldItem` | `true` | Panel for the item in your hand |
-| `ShowLookAtItem` | `true` | Stats under the name of the item you look at |
+| `ShowLookAtItem` | `true` | Stats above the name of the item you look at |
 | `RevealSillyBeans` | `true` | Show which effect a Silly Bean gives |
-| `PanelPosition` | `"bottom-right"` | `bottom-right`, `bottom-left`, `top-right`, `top-left`, `right` or `left` |
-| `PanelOffsetX` / `PanelOffsetY` | `24` / `160` | Distance from the screen edge, in pixels |
-| `PanelWidth` | `360` | Panel width in pixels |
+| `PanelPosition` | `"bottom-left"` | `bottom-right`, `bottom-left`, `top-right`, `top-left`, `right` or `left` |
+| `PanelOffsetX` / `PanelOffsetY` | `60` / `150` | Distance from the screen edge, in pixels at 900p (scaled with the screen) |
+| `PanelWidth` | `360` | Panel width, in pixels at 900p (scaled with the screen) |
 | `FontScale` | `1.0` | Text size multiplier |
 
 ## Build
