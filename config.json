@@ -3,9 +3,9 @@
   "ShowHeldItem": true,
   "ShowLookAtItem": true,
   "RevealSillyBeans": true,
-  "PanelPosition": "bottom-right",
-  "PanelOffsetX": 24,
-  "PanelOffsetY": 160,
+  "PanelPosition": "bottom-left",
+  "PanelOffsetX": 60,
+  "PanelOffsetY": 150,
   "PanelWidth": 360,
   "FontScale": 1.0
 }

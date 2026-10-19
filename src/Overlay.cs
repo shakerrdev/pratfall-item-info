@@ -9,6 +9,7 @@ internal sealed class Overlay
     private static readonly Color TitleColor = new(1f, 0.85f, 0.45f);
     private static readonly Color DescriptionColor = new(0.92f, 0.92f, 0.92f);
     private static readonly Color StatColor = new(0.65f, 0.9f, 1f);
+    private const float ReferenceHeight = 900f;
 
     private readonly Config _config;
     private readonly ItemInfoBuilder _builder;
@@ -24,6 +25,8 @@ internal sealed class Overlay
     private bool _toggleWasDown;
     private bool _reportedError;
     private string _lookText;
+    private float _scale = -1;
+    private StyleBoxFlat _style;
     private InteractableComponent _lookTarget;
     private double _nextCleanup;
 
@@ -56,20 +59,13 @@ internal sealed class Overlay
 
     private void BuildUi()
     {
-        var scale = _config.FontScale;
         _layer = new CanvasLayer { Name = "ItemInfoOverlay", Layer = 5 };
 
-        var style = new StyleBoxFlat
+        _style = new StyleBoxFlat
         {
             BgColor = new Color(0.06f, 0.05f, 0.04f, 0.8f),
-            BorderColor = new Color(1f, 1f, 1f, 0.12f),
-            ContentMarginLeft = 16,
-            ContentMarginRight = 16,
-            ContentMarginTop = 10,
-            ContentMarginBottom = 12
+            BorderColor = new Color(1f, 1f, 1f, 0.12f)
         };
-        style.SetCornerRadiusAll(10);
-        style.SetBorderWidthAll(2);
 
         _panel = new PanelContainer
         {
@@ -77,45 +73,73 @@ internal sealed class Overlay
             Visible = false,
             MouseFilter = Control.MouseFilterEnum.Ignore
         };
-        _panel.AddThemeStyleboxOverride("panel", style);
+        _panel.AddThemeStyleboxOverride("panel", _style);
 
         var box = new VBoxContainer { MouseFilter = Control.MouseFilterEnum.Ignore };
-        box.AddThemeConstantOverride("separation", 4);
         _panel.AddChild(box);
 
-        _title = MakeLabel(26 * scale, TitleColor);
-        _description = MakeLabel(17 * scale, DescriptionColor);
-        _stats = MakeLabel(17 * scale, StatColor);
+        _title = MakeLabel(TitleColor);
+        _description = MakeLabel(DescriptionColor);
+        _stats = MakeLabel(StatColor);
         box.AddChild(_title);
         box.AddChild(_description);
         box.AddChild(_stats);
 
         _layer.AddChild(_panel);
-        PlacePanel();
     }
 
-    private Label MakeLabel(float size, Color color)
+    private static Label MakeLabel(Color color)
     {
         var label = new Label
         {
             AutowrapMode = TextServer.AutowrapMode.WordSmart,
-            CustomMinimumSize = new Vector2(_config.PanelWidth, 0),
             MouseFilter = Control.MouseFilterEnum.Ignore
         };
-        label.AddThemeFontSizeOverride("font_size", Mathf.RoundToInt(size));
         label.AddThemeColorOverride("font_color", color);
         label.AddThemeColorOverride("font_outline_color", new Color(0, 0, 0, 0.85f));
-        label.AddThemeConstantOverride("outline_size", 4);
         return label;
     }
 
-    private void PlacePanel()
+    private void ApplyScale()
+    {
+        if (!_panel.IsInsideTree())
+            return;
+
+        var height = _panel.GetViewport().GetVisibleRect().Size.Y;
+        var scale = Mathf.Max(height / ReferenceHeight, 0.5f);
+        if (Mathf.IsEqualApprox(scale, _scale))
+            return;
+        _scale = scale;
+
+        var text = scale * _config.FontScale;
+        SizeLabel(_title, 26 * text, scale);
+        SizeLabel(_description, 18 * text, scale);
+        SizeLabel(_stats, 18 * text, scale);
+        ((VBoxContainer)_title.GetParent()).AddThemeConstantOverride("separation", Mathf.RoundToInt(4 * scale));
+
+        _style.ContentMarginLeft = _style.ContentMarginRight = 16 * scale;
+        _style.ContentMarginTop = 10 * scale;
+        _style.ContentMarginBottom = 12 * scale;
+        _style.SetCornerRadiusAll(Mathf.RoundToInt(10 * scale));
+        _style.SetBorderWidthAll(Mathf.Max(1, Mathf.RoundToInt(2 * scale)));
+
+        PlacePanel(scale);
+    }
+
+    private void SizeLabel(Label label, float fontSize, float scale)
+    {
+        label.CustomMinimumSize = new Vector2(_config.PanelWidth * scale, 0);
+        label.AddThemeFontSizeOverride("font_size", Mathf.RoundToInt(fontSize));
+        label.AddThemeConstantOverride("outline_size", Mathf.RoundToInt(fontSize / 6));
+    }
+
+    private void PlacePanel(float scale)
     {
         var position = _config.PanelPosition;
         var right = !position.Contains("left");
         var top = position.Contains("top");
         var bottom = position.Contains("bottom");
-        var offset = _config.PanelOffset;
+        var offset = _config.PanelOffset * scale;
 
         _panel.AnchorLeft = _panel.AnchorRight = right ? 1 : 0;
         _panel.GrowHorizontal = right ? Control.GrowDirection.Begin : Control.GrowDirection.End;
@@ -145,6 +169,7 @@ internal sealed class Overlay
             var active = _enabled && player.IsValid() && hud.IsValid() && HudVisible(hud)
                          && !(player.DeathComponent.IsValid() && player.DeathComponent.IsDead());
 
+            ApplyScale();
             UpdateHeld(active ? player : null);
             UpdateLookAt(player, hud, active);
 

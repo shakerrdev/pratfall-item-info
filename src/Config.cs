@@ -11,8 +11,8 @@ public sealed class Config
     public bool ShowLookAtItem { get; private set; } = true;
     public bool RevealSillyBeans { get; private set; } = true;
     public Key ToggleKey { get; private set; } = Key.F4;
-    public string PanelPosition { get; private set; } = "bottom-right";
-    public Vector2 PanelOffset { get; private set; } = new(24, 160);
+    public string PanelPosition { get; private set; } = "bottom-left";
+    public Vector2 PanelOffset { get; private set; } = new(60, 150);
     public float PanelWidth { get; private set; } = 360;
     public float FontScale { get; private set; } = 1f;
 
