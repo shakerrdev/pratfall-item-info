@@ -2,7 +2,7 @@
   "Name": "Item Info",
   "Version": "1.0.0",
   "Description": "Shows what the item you hold or look at does, and how many uses or how much time it has left.",
-  "Author": "finnbechinka",
+  "Author": "shaker",
   "Tags": ["UI", "QoL"],
   "Assembly": "ItemInfo.dll",
   "AutoLoad": false
